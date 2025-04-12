@@ -1,0 +1,47 @@
+$primary-color: orange;
+$secondary-color: blue;
+$background-color: wheat;
+$text-color: #333;
+$border-color: #ccc;
+$font-family-main: 'Helvetica';
+$font-family: "Arial";
+
+body {
+    background-color: $background-color;
+    color: $text-color;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar{
+    background-color: $primary-color;
+    padding: 25px 15px;
+    font-family: $font-family-main;
+
+    .navbar-brand{
+        color: white;
+        font-size: 2rem;
+        &:hover {
+            color: darken(white,10%);
+        }
+    }
+
+    .nav-link {
+        color: white;
+        &:hover {
+            color: darken(white,10%);
+            text-decoration:underline;
+        }
+    }
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+h1 {
+    color: $primary-color;
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: $font-family-main;
+}
