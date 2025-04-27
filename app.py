@@ -1,31 +1,36 @@
 from flask import Flask, render_template, request
+# from config import API_KEY
 import requests
 import os
 
-NEWS_API_KEY = os.environ.get('NEWS_API_KEY')
-
-if not NEWS_API_KEY or NEWS_API_KEY == None:
-    print("No API key")
-    raise RuntimeError("NEWS_API_KEY is not set in environment variables!")
-
-
 app = Flask(__name__)
 
-@app.route('/')
+
+API_KEY = os.environ.get('API_KEY')
+@app.route("/")
 def index():
     query = request.args.get('query', 'latest')
-    url = f'https://newsapi.org/v2/everything?q={query}&apiKey={NEWS_API_KEY}'
-    response = requests.get(url)
-    news_data = response.json()
-    articles = news_data.get('articles', [])
+    url = f"https://newsapi.org/v2/everything?q={query}&apiKey={API_KEY}"
 
-    # Filter out Yahoo articles and articles with "removed" in the title
-    filtered_articles = [
-        article for article in articles 
-        if 'Yahoo' not in article['source']['name'] and 'removed' not in article['title'].lower()
-    ]
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()  
 
-    return render_template('index.html', articles=filtered_articles, query=query)
+        try:
+            news_data = response.json()
+        except ValueError:
+            news_data = {"articles": []}  
 
-if __name__ == '__main__':
+    except requests.RequestException as e:
+        print(f"Error fetching news: {e}")
+        news_data = {"articles": []} 
+
+    articles = news_data.get("articles", [])
+
+    return render_template('index.html', articles=articles)
+
+
+       
+if __name__ == "__main__":                                                                                                                                  
     app.run(host='0.0.0.0', port=os.getenv('PORT', 5000))
+                                                                                                                           
