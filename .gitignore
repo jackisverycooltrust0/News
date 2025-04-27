@@ -1,0 +1,35 @@
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore environment files
+.env
+.venv/
+venv/
+ENV/
+env/
+
+# Ignore editor-specific files
+.vscode/
+.idea/
+*.swp
+
+# Ignore OS system files
+.DS_Store
+Thumbs.db
+
+# Ignore config file (important: your API key is here)
+config.py
+
+# If using Flask instance folder
+instance/
+
+# Ignore package distributions
+build/
+dist/
+*.egg-info/
+
+# Ignore log files
+*.log

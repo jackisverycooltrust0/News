@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request
-from config import API_KEY
+# from config import API_KEY
 import requests
+import os
 
 app = Flask(__name__)
 
 
+API_KEY = os.environ.get('API_KEY')
 
 @app.route("/")
 def index():
@@ -13,15 +15,15 @@ def index():
     
     response = requests.get(url)
     news_data = response.json()
-    print(news_data)
 
     articles = news_data.get("articles",[])
 
     return render_template('index.html', articles=articles)
 
-
-if __name__ == "__main__":
-    app.run(debug=True)
+       
+if __name__ == "__main__":                                                                                                                                  
+    app.run(host='0.0.0.0', port=os.getenv('PORT', 5000))
+                                                                                                                           
 
 
 
